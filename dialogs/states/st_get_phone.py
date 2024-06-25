@@ -1,4 +1,4 @@
-from dialog.states.state import St
+from dialogs.states.state import St
 
 
 class GetPhone(St):
