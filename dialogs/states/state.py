@@ -1,3 +1,3 @@
 class St:
-    def process(self, user):
+    def process(self, dialog, user):
         pass

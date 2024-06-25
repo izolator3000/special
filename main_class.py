@@ -14,7 +14,7 @@ class Main:
     def message_arrived(self, message, social_network):
         self.dialogs.message_arrived(message2user(message, social_network))
 
-    def send_message(self, messages: list):
+    def send_message(self, messages: tuple):
         self.messages4send = messages
 
     async def dp_polling(self):
@@ -23,6 +23,7 @@ class Main:
     async def my_send_messages(self):
         while True:
             for message in self.messages4send:
+                print(message)
                 await self.bot.send_message(**message)
             self.messages4send = []
             await asyncio.sleep(0.1)

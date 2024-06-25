@@ -2,47 +2,53 @@ import sqlite3
 
 
 class DBConnection:
-    def __init__(self, db_file='specialsql.db'):
+    def __init__(self, db_file=r'C:\Users\Dima\PycharmProjects\special\DB\specialsql.db'):
         try:
             self.connection = sqlite3.connect(db_file)
             self.cursor = self.connection.cursor()
         except sqlite3.Error as error:
             print(f"Не получилось соединиться с бд: {error}")
 
-    def save(self, user):
-
-        "insert into persone (name, value) select 'web', '14' from dual where not exists(select 1 from sys where name = 'web')"
-        result = self.select(f"select * from Persone where tg_id='{data['tg_id']}'")
-        res = bool(len(result))
-        if not res:
-            text = f"INSERT INTO Persone (tg_id, name, second_name, tg_name, date_appeal) " \
-                   f"VALUES ('{data['tg_id']}', '{data['first_name']}', '{data['last_name']}', '{data['user_name']}'," \
-                   f" '{data['date']}');"
-            self.insert(text)
-        self.insert()
-
-
+    # def save(self, user):
+    #
+    #     "insert into persone (name, value) select 'web', '14' from dual where not exists(select 1 from sys where name = 'web')"
+    #     result = self.select(f"select * from Persone where tg_id='{data['tg_id']}'")
+    #     res = bool(len(result))
+    #     if not res:
+    #         text = f"INSERT INTO Persone () " \
+    #                f"VALUES ('{data['tg_id']}', '{data['first_name']}', '{data['last_name']}', '{data['user_name']}'," \
+    #                f" '{data['date']}');"
+    #         self.insert(text)
+    #     self.insert()
 
 
-    def insert(self, sql_text: str):
+    def execute(self, sql_command):
         try:
-            self.cursor.execute(sql_text)
+            return self.cursor.execute(sql_command).fetchall()
         except Exception as error:
-            print(error)
+            print("Ошибка с бд: ", error)
+        self.connection.commit()
 
-        try:
-            self.connection.commit()
-        except Exception as error:
-            print(error)
 
-    def update(self, sql_text: str): self.insert(sql_text)
-
-    def select(self, sql_text: str):
-        try:
-            return self.cursor.execute(sql_text).fetchall()
-        except Exception as error:
-            print(error)
-            return True
+    # def insert(self, sql_text: str):
+    #     try:
+    #         self.cursor.execute(sql_text)
+    #     except Exception as error:
+    #         print(error)
+    #
+    #     try:
+    #         self.connection.commit()
+    #     except Exception as error:
+    #         print(error)
+    #
+    # def update(self, sql_text: str): self.insert(sql_text)
+    #
+    # def select(self, sql_text: str):
+    #     try:
+    #         return self.cursor.execute(sql_text).fetchall()
+    #     except Exception as error:
+    #         print(error)
+    #         return True
 
 
     def close(self):
