@@ -10,14 +10,13 @@ from dialogs.service.markup import create_keyboard, request_phone
 class Start(St):
     def process(self, dialog, user):
         name, phone = self.we_have_appeal_name_and_phone(dialog, user)
-        print(f"{name=}, {phone=}")
-        if name != '':
-            if phone != '':
-                dialog.send_message(self.genetate_messengers_for_StandardStart(user))
-                dialog.set_state(StandardStart())
-            else:
+        if name not in (None, ''):
+            if phone is None or phone in ('', 'None'):
                 dialog.send_message(self.genetate_messengers_for_phone(user))
                 dialog.set_state(SavePhoneSt())
+            else:
+                dialog.send_message(self.genetate_messengers_for_StandardStart(user))
+                dialog.set_state(StandardStart())
         else:
             dialog.send_message(self.genetate_messengers_for_name(user))
             dialog.set_state(GetPhone())
