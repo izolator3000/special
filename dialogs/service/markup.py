@@ -56,7 +56,6 @@ def new_inline_keyboard(buttons_texts: tuple[str], layout_method: tuple):
         keyboard[row].append(KeyboardButton(text=buttons_texts[x]))
         for but in range(x + 1, x + layout_method[row]):
             keyboard[row].append(KeyboardButton(text=buttons_texts[but]))
-    print(keyboard)
     # input_field_placeholder="Мой собственный текст"
     return ReplyKeyboardMarkup(keyboard=keyboard, resize_keyboard=True, one_time_keyboard=True)
 

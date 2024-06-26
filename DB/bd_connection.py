@@ -22,12 +22,19 @@ class DBConnection:
     #     self.insert()
 
 
-    def execute(self, sql_command):
+    def execute(self, sql_command, select_insert="select"):
+        match select_insert:
+            case "select":
+                return self.cursor.execute(sql_command).fetchall()
+            case "insert":
+                self.cursor.execute(sql_command)
+                return self.connection.commit()
+        """
         try:
             return self.cursor.execute(sql_command).fetchall()
         except Exception as error:
             print("Ошибка с бд: ", error)
-        self.connection.commit()
+        self.connection.commit()"""
 
 
     # def insert(self, sql_text: str):

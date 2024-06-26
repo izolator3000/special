@@ -23,7 +23,6 @@ class Main:
     async def my_send_messages(self):
         while True:
             for message in self.messages4send:
-                print(message)
                 await self.bot.send_message(**message)
             self.messages4send = []
             await asyncio.sleep(0.1)

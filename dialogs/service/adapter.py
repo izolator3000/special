@@ -1,16 +1,16 @@
-from dialogs.service.user_data import User, TgDataAddress
+from dialogs.service.user_data import TgDataAddress
 
 
 def message2user(message, social_network):
     match social_network:
         case "telegram":
-            data = [td.value for td in TgDataAddress]
-
-            l = []
-            for d in data:
-                l.append(eval(d))
-            # TODO Почему-то не работает строчка User(*[eval(td.value) for td in TgDataAddress])
-            return User(*l)
+            d = {}
+            for td in TgDataAddress:
+                try:
+                    d[str(td)[len("TgDataAddress."):]] = eval(td.value)
+                except:
+                    continue
+            return d
         case _:
-            print("Неизвестная соц сеть: ", message, social_network)
+            print("Неизвестная соц сеть: ", message, social_network, sep='\n')
 
