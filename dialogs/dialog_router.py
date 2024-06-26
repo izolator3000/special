@@ -11,27 +11,15 @@ class DialogList:
 
     def message_arrived(self, user):
         if not self.user_in_db(user):
-            print(f"User не в бд: {user}")
             self.add_new_user_in_db(user)
 
-        id = self.user_id(user)
+        user["id"] = self.user_id(user)
         try:
-            self.dialogs[id].message_arrived(user)
+            self.dialogs[user["id"]].message_arrived(user)
         except:
             dialog = Dialog(self.main, self.db_con)
-            self.dialogs[id] = dialog
+            self.dialogs[user["id"]] = dialog
             dialog.message_arrived(user)
-        """
-        try:
-            if self.user_in_db(user):
-                self.dialogs[self.user_id(user)].message_arrived(user)
-            else:
-                self.add_new_user_in_db(user)
-                dialog = Dialog(self.main, self.db_con)
-                self.dialogs[self.user_id(user)] = dialog
-                dialog.message_arrived(user)
-        except Exception as e:
-            print(f"Что-то пошло не так с добавлением нового пользователя: {e}")"""
 
     def user_in_db(self, user):
         return bool(len(self.db_con.execute(SqlRequests.user_in_db.value.format(user["tg_user_name"],

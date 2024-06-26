@@ -13,8 +13,9 @@ class Dialog:
     def set_state(self, state):
         self.state = state
 
-    def execute_db(self, sql_command):
-        return self.db_con.execute(sql_command)
+    def execute_db(self, sql_command, select_insert="select"):
+        print(sql_command)
+        return self.db_con.execute(sql_command, select_insert)
 
     def send_message(self, messages):
         self.main.send_message(messages)
